@@ -2,20 +2,14 @@
     "name": "yying/db",
     "description": "数据库封装类",
     "type": "1",
-    "require": {
-        "php": "7.3"
-    },
-    "license": "Apache",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Yying\\Db\\": "src/"
         }
     },
-    "authors": [
-        {
-            "name": "郑宇颖",
-            "email": "zhengyuying@u-road.com"
-        }
-    ],
-    "minimum-stability": "dev"
+    "minimum-stability": "stable",
+    "require": {
+        "ext-pdo": "*"
+    }
 }
