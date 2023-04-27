@@ -129,8 +129,10 @@ class BaseConnection
         }
         try {
             $this->conn->commit();
+            return true;
         }catch (\PDOException $exception) {
             $this->rollBack();
+            return false;
         }
     }
 

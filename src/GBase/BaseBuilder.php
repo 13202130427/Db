@@ -42,7 +42,7 @@ class BaseBuilder
             return $statement->execute($this->binds);
         } catch (\PDOException $exception) {
             if ($this->beginTransaction && $this->db->getTransStatus() === true) $this->db->setTransStatus(false);
-            return false;
+            throw new \PDOException($exception);
         }
     }
 

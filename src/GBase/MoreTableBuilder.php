@@ -148,8 +148,23 @@ class MoreTableBuilder extends BaseBuilder
         if (empty($this->table)) throw new \PDOException('未指定表');
         if (empty($this->updateData)) throw new \PDOException('未传递数据');
 
+        if ($this->moreTableTransStartCheck) {
+            try {
+                $this->db->beginTransaction();
+                $num = $this->batchInsert();
+            }catch (\PDOException $exception) {
+                $this->db->rollBack();
+                throw new \PDOException($exception);
+            }
+            $this->db->commit();
+            return $num;
+        }
+        return $this->batchInsert();
+    }
+
+    public function batchInsert()
+    {
         $num = 0;
-        if ($this->moreTableTransStartCheck && !$this->beginTransaction) throw new \PDOException('未开启事务');
         foreach ($this->table as $table) {
             $this->sql = $this->_insert($table,$this->updateData);
             $num += $this->exec();
@@ -158,15 +173,29 @@ class MoreTableBuilder extends BaseBuilder
     }
 
 
-
     public function update($data = []): int
     {
         if (!empty($data)) $this->setData($data);
         if (empty($this->table)) throw new \PDOException('未指定表');
         if (empty($this->updateData)) throw new \PDOException('未传递数据');
 
+        if ($this->moreTableTransStartCheck) {
+            try {
+                $this->db->beginTransaction();
+                $num = $this->batchUpdate();
+            }catch (\PDOException $exception) {
+                $this->db->rollBack();
+                throw new \PDOException($exception);
+            }
+            $this->db->commit();
+            return $num;
+        }
+        return $this->batchUpdate();
+    }
+
+    public function batchUpdate()
+    {
         $num = 0;
-        if ($this->moreTableTransStartCheck && !$this->beginTransaction) throw new \PDOException('未开启事务');
         foreach ($this->table as $table) {
             $this->sql = $this->_update($table,$this->updateData);
             $num += $this->exec();
@@ -174,18 +203,32 @@ class MoreTableBuilder extends BaseBuilder
         return $num;
     }
 
+
     public function delete(): int
     {
         if (empty($this->table)) throw new \PDOException('未指定表');
+        if ($this->moreTableTransStartCheck) {
+            try {
+                $this->db->beginTransaction();
+                $num = $this->batchDelete();
+            }catch (\PDOException $exception) {
+                $this->db->rollBack();
+                throw new \PDOException($exception);
+            }
+            $this->db->commit();
+            return $num;
+        }
+        return $this->batchDelete();
+    }
 
+    public function batchDelete()
+    {
         $num = 0;
-        if ($this->moreTableTransStartCheck && !$this->beginTransaction) throw new \PDOException('未开启事务');
         foreach ($this->table as $table) {
             $this->sql = $this->_delete($table);
             $num += $this->exec();
         }
         return $num;
-
     }
 
 
@@ -193,8 +236,22 @@ class MoreTableBuilder extends BaseBuilder
     {
         if (empty($this->table)) throw new \PDOException('未指定表');
         if (!$this->checkAssociated($associatedTables)) throw new \PDOException('多表关联关系错误');
+        if ($this->moreTableTransStartCheck) {
+            try {
+                $this->db->beginTransaction();
+                $num = $this->batchMerge($associatedTables,$mainTableField,$associatedTableField,$type,$finalHandle);
+            }catch (\PDOException $exception) {
+                $this->db->rollBack();
+                throw new \PDOException($exception);
+            }
+            $this->db->commit();
+            return $num;
+        }
+        return $this->batchMerge($associatedTables,$mainTableField,$associatedTableField,$type,$finalHandle);
+    }
+    public function batchMerge(array $associatedTables,string $mainTableField,string $associatedTableField,string $type = '=',$finalHandle = 'DELETE')
+    {
         $num = 0;
-        if ($this->moreTableTransStartCheck && !$this->beginTransaction) throw new \PDOException('未开启事务');
         foreach ($this->table as $table) {
             $this->sql = $this->_merge($table,$associatedTables[$table],$mainTableField,$associatedTableField,$type,$finalHandle);
             $num += $this->exec();
