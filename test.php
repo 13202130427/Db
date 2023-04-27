@@ -6,7 +6,7 @@ use \Uroad\Utils\GBase\Db as GBaseDb;
 use \Uroad\Utils\GBase\Type\RowType;
 use \Uroad\Utils\GBase\Type\SetType;
 
-class test
+class Test
 {
     /**
      * 实例
