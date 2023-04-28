@@ -88,6 +88,11 @@ class BaseConnection
         return $this->conn;
     }
 
+    public function getInsertId()
+    {
+        return $this->conn->lastInsertId();
+    }
+
     public function beginTransaction()
     {
         if ($this->beginTransaction) {

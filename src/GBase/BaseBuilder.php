@@ -166,12 +166,6 @@ class BaseBuilder
         return $key . $count;
     }
 
-
-    public function getInsertId()
-    {
-        return $this->conn->lastInsertId();
-    }
-
     protected function _insert(string $table,array $values): string
     {
         $keys = [];
