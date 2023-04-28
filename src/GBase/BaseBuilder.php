@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Uroad\Utils\GBase;
+namespace Yying\Db\GBase;
 
 
-use Uroad\Utils\GBase\Type\Type;
+use Yying\Db\GBase\Type\Type;
 
 class BaseBuilder
 {

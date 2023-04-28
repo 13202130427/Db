@@ -1,6 +1,6 @@
 <?php
 
-namespace Uroad\Utils\GBase\Type;
+namespace Yying\Db\GBase\Type;
 
 
 use Uroad\Utils\GBase\BaseBuilder;

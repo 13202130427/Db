@@ -1,10 +1,10 @@
 <?php
 
 
-use Uroad\Utils\Mysql\Db as MysqlDb;
-use \Uroad\Utils\GBase\Db as GBaseDb;
-use \Uroad\Utils\GBase\Type\RowType;
-use \Uroad\Utils\GBase\Type\SetType;
+use Yying\Db\Mysql\Db as MysqlDb;
+use Yying\Db\GBase\Db as GBaseDb;
+use Yying\Db\GBase\Type\RowType;
+use Yying\Db\GBase\Type\SetType;
 
 class Test
 {

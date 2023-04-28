@@ -1,6 +1,6 @@
 <?php
 
-namespace Uroad\Utils\Mysql;
+namespace Yying\Db\Mysql;
 
 
 class Db

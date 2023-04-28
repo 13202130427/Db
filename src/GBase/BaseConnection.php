@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Uroad\Utils\GBase;
+namespace Yying\Db\GBase;
 
 
 
