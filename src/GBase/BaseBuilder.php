@@ -33,6 +33,7 @@ class BaseBuilder
     protected $isSingle;
     protected $beginTransaction = false;
 
+
     protected function exec()
     {
         //如果开启了事务 且事务状态为FALSE 不给执行
@@ -46,6 +47,9 @@ class BaseBuilder
         }
     }
 
+
+    protected function _checkGet(){}
+    protected function _get(): string{}
 
     public function select($field)
     {
@@ -106,6 +110,31 @@ class BaseBuilder
     {
         $this->tableRename = $name;
         return $this;
+    }
+
+    public function get(): ResultBuilder
+    {
+        $this->_checkGet();
+        $this->sql = $this->_get();
+        return $this->db->query($this->sql,$this->binds)->get();
+    }
+
+    public function first()
+    {
+        $this->_checkGet();
+        $this->sql = $this->_get();
+        return $this->db->query($this->sql,$this->binds)->first();
+    }
+
+    public function pluck(string $nameField,$idField)
+    {
+        $this->_checkGet();
+        $data = $this->get()->toArray();
+        $returnData = [];
+        foreach ($data as $value) {
+            $returnData[$value[$idField]] = $value[$nameField];
+        }
+        return $returnData;
     }
 
 

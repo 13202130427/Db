@@ -119,7 +119,7 @@ class Test
             ->groupBy('d.department_id')
             ->orderBy('a.created_at')
             ->select('a.*')
-            ->get();
+            ->get()->toArray();
         $db->query("INSERT INTO user(id,name,address) VALUES(?,?,ROW(?,?,?))");
 
         $db->beginTransaction();
@@ -135,7 +135,7 @@ class Test
 
         $db->table(function () use ($db) {
             return $db->tables(['user2022','user2023'])->select(['address']);
-        })->select('province,city')->get();
+        })->select('province,city')->get()->all();
 
 
 

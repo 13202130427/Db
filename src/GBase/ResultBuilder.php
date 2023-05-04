@@ -9,6 +9,7 @@ class ResultBuilder
     protected $statement;
     protected $db;
     protected $conn;
+    protected $item;
 
     public function __construct(\PDOStatement $statement, BaseConnection &$db)
     {
@@ -19,7 +20,8 @@ class ResultBuilder
 
     public function get()
     {
-        return $this->statement->fetchAll(\PDO::FETCH_OBJ);
+        $this->item = $this->statement->fetchAll(\PDO::FETCH_OBJ);
+        return $this;
     }
 
     public function first()
@@ -27,6 +29,16 @@ class ResultBuilder
         return $this->statement->fetch(\PDO::FETCH_OBJ);
     }
 
+    public function all()
+    {
+        return $this->item;
+    }
+
+    public function toArray()
+    {
+        if (empty($this->item)) return [];
+        return get_object_vars($this->item);
+    }
 
 
 }
