@@ -3,7 +3,7 @@
 namespace Yying\Db\GBase\Type;
 
 
-use Uroad\Utils\GBase\BaseBuilder;
+use Yying\Db\GBase\BaseBuilder;
 
 class ListType extends Type
 {

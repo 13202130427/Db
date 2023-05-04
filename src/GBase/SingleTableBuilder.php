@@ -85,11 +85,20 @@ class SingleTableBuilder extends BaseBuilder
         $this->sql = $this->_get();
         return $this->db->query($this->sql,$this->binds)->get();
     }
+
     protected function _get(): string
     {
         $this->sql = 'SELECT '.implode(',',$this->field) . ' FROM '.$this->table;
         if ($this->tableRename) $this->sql .= ' AS '.$this->tableRename;
         return $this->bindJoin().$this->bindWhere().$this->bindGroupBy().$this->bindOrderBy();
+    }
+
+    public function first()
+    {
+        if (empty($this->table)) throw new \PDOException('未指定表');
+        if (empty($this->field)) throw new \PDOException('未指定查询字段');
+        $this->sql = $this->_get();
+        return $this->db->query($this->sql,$this->binds)->first();
     }
 
     public function insert($data = []): int

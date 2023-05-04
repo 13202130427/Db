@@ -91,6 +91,15 @@ class MoreTableBuilder extends BaseBuilder
         return $this->db->query($this->sql,$this->binds)->get();
     }
 
+    public function first()
+    {
+        if (empty($this->table)) throw new \PDOException('未指定表');
+        if (empty($this->field)) throw new \PDOException('未指定查询字段');
+        if (empty($this->tableRename)) throw new \PDOException('多表联合查询必须指定主表别名');
+        $this->sql = $this->_get();
+        return $this->db->query($this->sql,$this->binds)->first();
+    }
+
 
     protected function _get(): string
     {

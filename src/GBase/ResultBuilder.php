@@ -19,7 +19,12 @@ class ResultBuilder
 
     public function get()
     {
-        return $this->statement->fetchAll();
+        return $this->statement->fetchAll(\PDO::FETCH_OBJ);
+    }
+
+    public function first()
+    {
+        return $this->statement->fetch(\PDO::FETCH_OBJ);
     }
 
 
